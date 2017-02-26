@@ -14,8 +14,8 @@ class MockProductionClass():
         return self.param
 
 class TestPatch(TestCase):
-    @patch('production.ProductionClass')
-    def test1(self, MockProductionClass):
+    @patch('production.ProductionClass', MockProductionClass)
+    def test1(self):
         assert production.ProductionClass is MockProductionClass
 
     def test2(self):
