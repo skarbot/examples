@@ -1,7 +1,7 @@
 from unittest import TestCase, main
 from unittest.mock import patch
 
-from . import production
+from mocks import production
 
 
 class MockProductionClass():
@@ -14,13 +14,25 @@ class MockProductionClass():
         return self.param
 
 class TestPatch(TestCase):
-    @patch('production.ProductionClass', MockProductionClass)
+    @patch('mocks.production.ProductionClass', MockProductionClass)
     def test1(self):
         assert production.ProductionClass is MockProductionClass
 
     def test2(self):
-        with patch('production.ProductionClass', MockProductionClass):
+        with patch('mocks.production.ProductionClass', MockProductionClass):
             assert production.ProductionClass is MockProductionClass
+
+class TestPatcher(TestCase):
+    def setUp(self):
+        self.patch1 = patch('mocks.production.ProductionClass', MockProductionClass)
+        self.patch1.start()
+
+    def tearDown(self):
+        self.patch1.stop()
+
+    def test(self):
+        assert production.ProductionClass is MockProductionClass
+
 
 if __name__ == '__main__':
     main()
