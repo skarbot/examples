@@ -20,6 +20,10 @@ class TestModuleImport(TestCase):
     def test(self):
         with patch('builtins.__import__', myimport):
             self.assertEqual(module_check(), 1)
+    def test1(self):
+        with patch('builtins.__import__', myimport):
+            with self.assertRaises(ImportError):
+                import abc
 
 if __name__ == '__main__':
     main()
